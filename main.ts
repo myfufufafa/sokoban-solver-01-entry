@@ -1,6 +1,6 @@
-import f from"node:fs";
-let I="/input/",o="/output/",w,n,V,Q,g,oc,sn,mk,pv,st=0,B0,pl,J=()=>new Int32Array(n),F,S,solve;
+import f from"node:fs"
+let{MAKEFUN_INPUT_DIR:I="/input/",MAKEFUN_OUTPUT_DIR:o="/output/"}=process.env,w,n,V,Q,g,oc,sn,mk,pv,st=0,B0,pl,J=()=>new Int32Array(n),F,S,solve
 F=(p,A,s)=>{let q=[p];A[p]=s;for(let x of q)for(let k=4;k--;){let y=x+V[k];if(!Q[y]&&!oc[y]&&A[y]^s){A[y]=s;s>0&&(pv[y]=x);q.push(y)}}return Math.min(...q)}
 S=(B,Y,G,O)=>{let A=[[B,Y]],ix={};for(let h=0;h<A.length;h++){let[b2,y2]=A[h],i=0;oc=J();[...b2,...O].map(b=>oc[b]=1);let e=++st;F(y2,sn,e);for(let b of b2){for(let k=4;k--;){let t=b+V[k];if(sn[b-V[k]]^e||Q[t]||oc[t])continue;oc[b]=0;oc[t]=1;let u=[...b2];u[i]=t;u.sort((x,y)=>x-y);let v=u+":"+F(b,mk,-++st);if(!ix[v]){let w2="";for(let p=b-V[k];p!=y2;p=pv[p])w2="udlr"[V.indexOf(p-pv[p])]+w2;ix[v]=A.push([u,b,h,w2+"udlr"[k]]);if(u+""==G){let d=ix[v]-1,m="";for(i=d;i>0;i=A[i][2])m=A[i][3]+m;return[m,A[d][1]]}}oc[t]=0;oc[b]=1}i++}if(A[1e5])return 0}return 0}
 solve=t=>{w=t.search("\n")+1;n=t.length;Q=J();g=[];B0=[];V=[-w,w,-1,1];oc=J();sn=J();mk=J();pv=J();for(let i=0;i<n;i++){let k=" .*$@+".indexOf(t[i]);Q[i]=k<0;if(38>>k&1)g.push(i);if(12>>k&1)B0.push(i);if(k>3)pl=i}let M={},Z=[];for(let j=2;j--;)for(let b of j?g:B0){let k=(b%w/7|0)*2+(b>pl),z=M[k]||Z[Z.push(M[k]={b:[],g:[]})-1];z["bg"[j]].push(b)}let R2=Z.some(x=>x.b.length^x.g.length)?0:Z,m="",s;if(!R2)return"";for(let x of R2){s=S(x.b,pl,x.g,R2.flatMap(o=>o==x?[]:o.b));if(!s)return"";m+=s[0];pl=s[1];x.b=x.g}return m}
-for(let id of f.readdirSync(I)){f.mkdirSync(o+id);f.writeFileSync(o+id+"/solution.txt",solve(f.readFileSync(I+id+"/level.txt")+""))}
+for(let id of f.readdirSync(I)){f.mkdirSync(o+"/"+id,{recursive:true});f.writeFileSync(o+"/"+id+"/solution.txt",solve(f.readFileSync(I+"/"+id+"/level.txt")+""))}
